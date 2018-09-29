@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
@@ -105,13 +106,66 @@ class Webcasestep(models.Model):
     webcase = models.ForeignKey(to='Webcase', to_field='id', on_delete=models.CASCADE, null=True)
     webcasename = models.CharField('测试用例标题', max_length=256)    # webui测试用例标题
     webtestsetp = models.CharField('测试步骤', max_length=256)      # webui 测试用例步骤
-    webtestobjname = models.CharField('测试对象名称描述', max_length=256)   # webui 测试对象名称描述
+    webtestobjname = models.CharField('测试对象名称描述', max_length=256)   # webui 测试对象名称描述(关键字）
     webfindmethod = models.CharField('定位方式', max_length=256)    # 操作元素定位方式
     webevelement = models.CharField('控件元素', max_length=512)     # 操作元素的定位表达式
-    we
+    webtestdata = models.CharField('测试数据', max_length=512)      # 测试步骤中输入的数据
+    webassertdata = models.CharField('验证数据', max_length=128)    # 预期结果数据
+    webtestresult = models.BooleanField('测试结果', max_length=32)  # 测试结果
+    create_time = models.DateTimeField('创建时间', auto_now=True)   # 创建时间，自动读取当前时间
+
+    def __str__(self):
+        return self.webcasename
 
 
+class Appcase(models.Model):
+    """
+    webui测试用例表
+    """
+    project = models.ForeignKey(to='Project', to_field='pid', on_delete=models.CASCADE, null=True)  # 关联项目id
+    appcasename = models.CharField('用例名称', max_length=256)  # web测试用例名称
+    apptestresult = models.BooleanField('测试结果')  # web测试结果
+    apptester = models.CharField('测试负责人', max_length=64)  # 执行人
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间，自动读取当前时间
 
+    class Meta:
+        verbose_name = 'app测试用例'
+        verbose_name_plural = 'app测试用例'
+
+    def __str__(self):
+        return self.appcasename
+
+
+class Appcasestep(models.Model):
+    """
+    appui测试用例步骤
+    """
+    appcase = models.ForeignKey(to='appcase', to_field='id', on_delete=models.CASCADE, null=True)
+    appcasename = models.CharField('测试用例标题', max_length=256)  # webui测试用例标题
+    apptestsetp = models.CharField('测试步骤', max_length=256)  # webui 测试用例步骤
+    apptestobjname = models.CharField('测试对象名称描述', max_length=256)  # webui 测试对象名称描述(关键字）
+    appfindmethod = models.CharField('定位方式', max_length=256)  # 操作元素定位方式
+    appevelement = models.CharField('控件元素', max_length=512)  # 操作元素的定位表达式
+    apptestdata = models.CharField('测试数据', max_length=512)  # 测试步骤中输入的数据
+    appassertdata = models.CharField('验证数据', max_length=128)  # 预期结果数据
+    apptestresult = models.BooleanField('测试结果', max_length=32)  # 测试结果
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间，自动读取当前时间
+
+    def __str__(self):
+        return self.appcasename
+
+
+class UserInfo(AbstractUser):
+    """
+    用户信息
+    """
+    nid = models.AutoField(primary_key=True)
+    telephone = models.CharField(max_length=11, null=True, unique=True)
+    avatar = models.FileField(upload_to='avatars/', default="/avatars/default.png")
+    create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
+
+    def __str__(self):
+        return self.username
 
 
 
