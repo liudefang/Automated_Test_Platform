@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from test_platform.forms import RegForm
@@ -57,6 +57,7 @@ def login(request):
         if user:
             auth.login(request, user)
             response["username"] = user.username
+
         else:
             response["msg"] = "用户名或者密码错误!"
 
@@ -64,3 +65,23 @@ def login(request):
 
     return render(request, "login.html")
 
+
+def index(request):
+    """
+    系统首页
+    :param request:
+    :return:
+    """
+
+    return render(request, "index.html")
+
+
+def logout(request):
+    """
+    退出系统
+    :param request:
+    :return:
+    """
+    auth.logout(request)
+
+    return redirect("/login/")
