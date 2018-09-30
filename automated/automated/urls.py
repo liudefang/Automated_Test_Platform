@@ -22,5 +22,6 @@ from test_platform import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^register/$', views.register)
+    url(r'^register/$', views.register),
+    url(r'^login/$', views.login),
 ]

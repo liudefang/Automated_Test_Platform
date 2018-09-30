@@ -3,8 +3,11 @@
 # @Author  : mike.liu
 # @File    : forms.py
 from django import forms
-from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 from django.forms import widgets
+
+from test_platform.models import UserInfo
+
 
 class RegForm(forms.Form):
     username = forms.CharField(
@@ -26,7 +29,7 @@ class RegForm(forms.Form):
         error_messages={
             "min_length": "密码不能少于6位!",
             "max_length": "密码长度不能大于16位!",
-            "required": "该字段不能为空",
+            "required": "该字段不能为空!",
         }
     )
 
@@ -38,7 +41,7 @@ class RegForm(forms.Form):
         error_messages={
             "min_length": "密码不能少于6位!",
             "max_length": "密码长度不能大于16位!",
-            "required": "该字段不能为空",
+            "required": "该字段不能为空!",
         }
     )
 
@@ -46,11 +49,33 @@ class RegForm(forms.Form):
         label="邮箱地址",
         max_length=64,
         widget=widgets.EmailInput(attrs={"class": "form-control"}),
-        # 自己定制的校验规则
-        validators=[
-            RegexValidator(r'^[0-9A-Za-z\_\-]+(\.[0-9A-Za-z\_\-]+)*@[0-9A-Za-z]+(\.[0-9A-Za-z]+){1,}$', '邮箱格式错误!')
-        ],
         error_messages={
-            "required": "该字段不能为空!"
+            "required": "该字段不能为空!",
+            "invalid": "邮箱格式错误!",
         }
     )
+
+    # 局部钩子
+    def clean_username(self):
+        value = self.cleaned_data.get("username")
+
+        username = UserInfo.objects.filter(username=value).first()
+
+        if not username:
+            return value
+        else:
+            raise ValidationError("该用户已注册!")
+
+    # 全局钩子
+    def clean(self):
+        password = self.cleaned_data.get("password")
+        re_password = self.cleaned_data.get("re_password")
+
+        if password and re_password:
+            if password == re_password:
+                return self.cleaned_data
+            else:
+                raise ValidationError("两次密码不一致!")
+
+        else:
+            return self.cleaned_data
