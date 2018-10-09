@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
@@ -73,7 +74,7 @@ def index(request):
     :return:
     """
 
-    return render(request, "index.html")
+    return render(request, "login.html")
 
 
 def logout(request):
@@ -85,3 +86,14 @@ def logout(request):
     auth.logout(request)
 
     return redirect("/login/")
+
+
+@login_required
+def home(request):
+    """
+    登录后的首页
+    :param request:
+    :return:
+    """
+
+    return render(request, "home.html")

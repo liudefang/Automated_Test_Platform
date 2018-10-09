@@ -125,3 +125,5 @@ STATICFILES_DIRS = [
 
 
 AUTH_USER_MODEL = "test_platform.UserInfo"
+
+LOGIN_URL = "/login/"
