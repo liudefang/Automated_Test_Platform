@@ -11,7 +11,7 @@ class Project(models.Model):
     pid = models.AutoField(primary_key=True)
     projectname = models.CharField('项目名称', max_length=64)   # 项目名称
     projectdesc = models.CharField('项目描述', max_length=256)  # 项目描述
-    projecter = models.CharField('项目负责人', max_length=256)    # 项目负责人
+    Testers = models.CharField('测试负责人', max_length=256)    # 项目负责人
     create_time = models.DateTimeField('创建时间', auto_now=True)   # 创建时间
 
     class Meta:
@@ -22,12 +22,28 @@ class Project(models.Model):
         return self.projectname
 
 
+class Modules(models.Model):
+    """
+    模块表
+    """
+    mid = models.AutoField(primary_key=True)
+    Project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    Modules_name = models.CharField('模块名称', max_length=20)  # 模块名称
+    Testers = models.CharField('测试人员', max_length=100)  # 测试执行人员
+    Developer = models.CharField(max_length=100)    # 备用
+    status = models.BooleanField()      # 备用
+    Modules_desc = models.CharField('模块描述', max_length=200)     # 模块描述
+
+    def __str__(self):
+        return self.Modules_name
+
+
 class Apitest(models.Model):
     """
     业务场景接口表
     """
-    # 关联产品id
-    project = models.ForeignKey(to='Project', to_field='pid', on_delete=models.CASCADE, null=True)
+    # 关联模块id
+    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
     apitestname = models.CharField('流程接口名称', max_length=64)     # 流程接口测试场景
     apitestdesc = models.CharField('描述', max_length=64, null=True)      # 流程接口描述
     apitester = models.CharField('测试负责人', max_length=64)    # 执行人
@@ -66,7 +82,8 @@ class Apis(models.Model):
     单一接口表
     """
 
-    project = models.ForeignKey(to='Project', to_field='pid', on_delete=models.CASCADE, null=True)  # 管理项目id
+    # 关联模块id
+    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
     apiname = models.CharField('接口名称', max_length=128)      # 接口标题
     apiurl = models.CharField('URL地址', max_length=256)  # 接口URL地址
     apiparamvalue = models.CharField('请求参数和值', max_length=1024)  # 请求参数和值
@@ -85,7 +102,8 @@ class Webcase(models.Model):
     """
     webui测试用例表
     """
-    project = models.ForeignKey(to='Project', to_field='pid', on_delete=models.CASCADE, null=True)  # 关联项目id
+    # 关联模块id
+    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
     webcasename = models.CharField('用例名称', max_length=256)      # web测试用例名称
     webtestresult = models.BooleanField('测试结果')     # web测试结果
     webtester = models.CharField('测试负责人', max_length=64)    # 执行人
@@ -122,7 +140,8 @@ class Appcase(models.Model):
     """
     webui测试用例表
     """
-    project = models.ForeignKey(to='Project', to_field='pid', on_delete=models.CASCADE, null=True)  # 关联项目id
+    # 关联模块id
+    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
     appcasename = models.CharField('用例名称', max_length=256)  # web测试用例名称
     apptestresult = models.BooleanField('测试结果')  # web测试结果
     apptester = models.CharField('测试负责人', max_length=64)  # 执行人
