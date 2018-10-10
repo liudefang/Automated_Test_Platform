@@ -97,3 +97,15 @@ def home(request):
     """
 
     return render(request, "home.html")
+
+
+@login_required
+def project(request):
+    """
+    项目
+    :param request:
+    :return:
+    """
+
+
+    return render(request, "project.html")
