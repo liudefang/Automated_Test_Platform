@@ -13,3 +13,15 @@ table {
     margin-top: 50px;
     margin-left: 40px;
 }
+
+.navbar {
+    background-color: #428bca;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.navbar-collapse .navbar-nav > li > a{
+    color: #333333;
+}
