@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>自动化测试平台</title>
     <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.css">
-    <script src="/static/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/static/css/toastr.min.css">
+    <script src="/static/js/jquery-3.3.1.js"></script>
     <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="/static/js/toastr.min.js"></script>
     <link rel="stylesheet" href="/static/css/dashboard.css">
     <link rel="stylesheet" href="/static/css/home.css">
+
     <style>
         #user_icon {
             font-size: 18px;
@@ -113,7 +116,7 @@
 </div>
 
 
-<script src="/static/jquery-3.3.1.js"></script>
+<script src="/static/js/jquery-3.3.1.js"></script>
 <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script>
     // 左侧菜单
@@ -127,8 +130,21 @@
 </script>
 
 <script>
-
-    // // 新建项目验证
+    // $(function () {
+        // toastr.options= {
+        //         "closeButton":false,//显示关闭按钮
+        //         "debug":false,//启用debug
+        //         "positionClass":"toast-top-center",//弹出的位置
+        //         "showDuration":"300",//显示的时间
+        //         "hideDuration":"1000",//消失的时间
+        //         "timeOut":"5000",//停留的时间
+        //         "extendedTimeOut":"1000",//控制时间
+        //         "showEasing":"swing",//显示时的动画缓冲方式
+        //         "hideEasing":"linear",//消失时的动画缓冲方式
+        //         "showMethod":"fadeIn",//显示时的动画方式
+        //         "hideMethod":"fadeOut"//消失时的动画方式
+        //         };
+        // // 新建项目验证
 
     $(".btn_sub").click(function () {
 
@@ -142,18 +158,18 @@
                 csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
             },
             success: function (data) {
-                console.log(data.project_name)
+                console.log(data.status)
 
 
-                if (data.project_name) {
-                    alert(111)
+                if (data.status== 0) {
+                    // alert(111)
+                    toastr.success('提交数据成功');
                     if (location.search){
                             location.href = location.search.slice(6)
                     }
                     else {
-                            location.href = "/home/"
+                            location.href = "/project/"
                     }
-
 
                 }
                 else {
@@ -172,6 +188,13 @@
 
         })
     });
+// })
+
+
+
+
+
+
 
 
 </script>

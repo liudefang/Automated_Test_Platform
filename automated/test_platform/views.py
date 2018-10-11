@@ -132,7 +132,7 @@ def add_project(request):
     :return:
     """
     if request.method == "POST":
-        response = {"project_name": None, "msg": None}
+
         project_name = request.POST.get("project_name")
         project_desc = request.POST.get("project_desc")
         testers = request.POST.get("testers")
@@ -143,13 +143,13 @@ def add_project(request):
 
             Project.objects.create(project_name=project_name, project_desc=project_desc, testers=testers)
 
-            response["project_name"] = project_name
+            response = {"status": 0, "msg": "添加成功!"}
 
-            return redirect("/project")
+            # return redirect("/project")
         elif len(project_name) == 0:
-            response["msg"] = "项目名称不能为空!"
+            response = {"status": 1, "msg": "项目名称不能为空!"}
         else:
-            response["msg"] = "项目名称已存在!"
+            response = {"status": 2, "msg": "项目名称已存在!"}
 
         return JsonResponse(response)
 
@@ -169,7 +169,6 @@ def add_modules(request):
 
     if request.method == "POST":
 
-        response = {"modules_name": None, "msg": None}
         modules_name = request.POST.get("modules_name")
         modules_desc = request.POST.get("modules_desc")
         testers = request.POST.get("testers")
@@ -180,11 +179,13 @@ def add_modules(request):
 
             Modules.objects.create(modules_name=modules_name, modules_desc=modules_desc, testers=testers, Project_id=project_id)
 
-            return redirect("/modules")
+            response = {"status": 0, "msg": "添加成功!"}
         elif len(modules_name) == 0:
-            response["msg"] = "模块名称不能为空!"
+
+            response = {"status": 1, "msg": "模块名称不能为空!"}
         else:
-            response["msg"] = "模块名称已存在!"
+
+            response = {"status": 2, "msg": "模块名称已存在!"}
 
         return JsonResponse(response)
 

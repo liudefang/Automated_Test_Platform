@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>自动化测试平台</title>
     <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.css">
-    <script src="/static/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/static/css/toastr.min.css">
+    <script src="/static/js/jquery-3.3.1.js"></script>
     <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/static/css/login_reg.css">
+    <script src="/static/js/toastr.min.js"></script>
 
 </head>
 <body>
@@ -55,10 +57,10 @@
                     },
                     success: function (data) {
                         console.log(data)
-                        alert(111)
 
 
                         if (data.username){
+                            toastr.success('提交数据成功');
                             if (location.search){
                                 location.href = location.search.slice(6)
                             }

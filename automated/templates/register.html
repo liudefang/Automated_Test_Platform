@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>注册页面</title>
     <link rel="stylesheet" href="../static/bootstrap-3.3.7/css/bootstrap.css">
-    <script src="../static/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/static/css/toastr.min.css">
+    <script src="../static/js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="/static/css/login_reg.css">
+    <script src="/static/js/toastr.min.js"></script>
 
 </head>
 <body>
@@ -59,7 +61,7 @@
 
                 if(data.username){
                     // 注册成功
-                    alert("注册成功");
+                    toastr.success('提交数据成功');
                     location.href="/login/"
                 }
                 else {
