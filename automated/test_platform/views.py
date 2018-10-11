@@ -190,3 +190,8 @@ def add_modules(request):
         return JsonResponse(response)
 
     return render(request, "modules.html")
+
+
+def toastr(request):
+
+    return render(request, "toastr.html")

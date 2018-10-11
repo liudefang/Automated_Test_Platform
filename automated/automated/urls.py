@@ -35,4 +35,6 @@ urlpatterns = [
     # 模块
     url(r'^modules/$', views.modules),
     url(r'^add_modules/$', views.add_modules),
+
+    url(r'^toastr/$', views.toastr),
 ]
