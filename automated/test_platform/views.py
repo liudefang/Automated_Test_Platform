@@ -112,6 +112,19 @@ def project(request):
 
 
 @login_required
+def modules(request):
+    """
+    模块
+    :param request:
+    :return:
+    """
+    modules_list = Modules.objects.filter().all()
+    project_list = Project.objects.all()
+
+    return render(request, "modules.html", {"modules_list": modules_list, "project_list": project_list})
+
+
+@login_required
 def add_project(request):
     """
     新增项目
@@ -119,25 +132,60 @@ def add_project(request):
     :return:
     """
     if request.method == "POST":
-        response = {"username": None, "msg": None}
+        response = {"project_name": None, "msg": None}
         project_name = request.POST.get("project_name")
         project_desc = request.POST.get("project_desc")
         testers = request.POST.get("testers")
 
         print("project_name:", project_name)
 
-        if len(project_name) != 0:
+        if len(project_name) != 0 and project_name != str(Project.objects.filter(project_name=project_name).first()):
 
-            Project.objects.create(projectname=project_name, projectdesc=project_desc, Testers=testers)
+            Project.objects.create(project_name=project_name, project_desc=project_desc, testers=testers)
+
+            response["project_name"] = project_name
 
             return redirect("/project")
-        else:
+        elif len(project_name) == 0:
             response["msg"] = "项目名称不能为空!"
+        else:
+            response["msg"] = "项目名称已存在!"
 
         return JsonResponse(response)
 
-
-
-
-
     return render(request, "project.html")
+
+
+@login_required
+def add_modules(request):
+    """
+    新增模块
+    :param request:
+    :return:
+    """
+
+    # 搜索出所有的项目
+
+
+    if request.method == "POST":
+
+        response = {"modules_name": None, "msg": None}
+        modules_name = request.POST.get("modules_name")
+        modules_desc = request.POST.get("modules_desc")
+        testers = request.POST.get("testers")
+        project_id = request.POST.get("project_id")
+        print("project_id:", project_id)
+
+        if len(modules_name) != 0 and modules_name != str(Modules.objects.filter(modules_name=modules_name).first()):
+
+            Modules.objects.create(modules_name=modules_name, modules_desc=modules_desc, testers=testers, Project_id=project_id)
+
+            return redirect("/modules")
+        elif len(modules_name) == 0:
+            response["msg"] = "模块名称不能为空!"
+        else:
+            response["msg"] = "模块名称已存在!"
+
+        return JsonResponse(response)
+
+    return render(request, "modules.html")
