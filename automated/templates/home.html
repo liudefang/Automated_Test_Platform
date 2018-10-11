@@ -125,5 +125,47 @@
         $(this).next().slideToggle();
     });
 </script>
+
+<script>
+
+    // // 新建项目验证
+
+
+    $(".btn_sub").click(function () {
+
+        $.ajax({
+            url: "/add_project/",
+            type: "post",
+            data: {
+                project_name: $("#project_name").val(),
+                project_desc: $("#project_desc").val(),
+                testers: $("#testers").val(),
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+            },
+            success: function (data) {
+                console.log(data)
+                alert(1111)
+                if (data.project_name) {
+
+                   location.href = "/project/"
+                }
+
+                else {
+                    console.log(data.msg)
+
+                    $(".error").text(data.msg);
+                    setTimeout(function () {
+                        $(".error").text("");
+
+                    }, 5000)
+                }
+                 alert(222)
+
+
+            }
+
+        })
+    })
+</script>
 </body>
 </html>

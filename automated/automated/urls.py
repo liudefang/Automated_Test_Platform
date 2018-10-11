@@ -30,4 +30,5 @@ urlpatterns = [
 
     # 项目
     url(r'^project/$', views.project),
+    url(r'^add_project/$', views.add_project)
 ]

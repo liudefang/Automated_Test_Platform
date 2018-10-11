@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from test_platform.forms import RegForm
-from test_platform.models import UserInfo
+from test_platform.models import *
 
 
 # 注册
@@ -106,6 +106,38 @@ def project(request):
     :param request:
     :return:
     """
+    project_list = Project.objects.filter().all()
+
+    return render(request, "project.html", {"project_list": project_list})
+
+
+@login_required
+def add_project(request):
+    """
+    新增项目
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        response = {"username": None, "msg": None}
+        project_name = request.POST.get("project_name")
+        project_desc = request.POST.get("project_desc")
+        testers = request.POST.get("testers")
+
+        print("project_name:", project_name)
+
+        if len(project_name) != 0:
+
+            Project.objects.create(projectname=project_name, projectdesc=project_desc, Testers=testers)
+
+            return redirect("/project")
+        else:
+            response["msg"] = "项目名称不能为空!"
+
+        return JsonResponse(response)
+
+
+
 
 
     return render(request, "project.html")
