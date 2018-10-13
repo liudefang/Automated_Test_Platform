@@ -31,6 +31,7 @@ urlpatterns = [
     # 项目
     url(r'^project/$', views.project),
     url(r'^add_project/$', views.add_project),
+    url(r'^del_project/$', views.del_project),
 
     # 模块
     url(r'^modules/$', views.modules),

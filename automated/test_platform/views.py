@@ -157,6 +157,24 @@ def add_project(request):
 
 
 @login_required
+def del_project(request):
+    """
+    删除项目
+    :param request:
+    :return:
+    """
+    project_ids = request.POST.get("pid")
+    project_ids = project_ids.split(',')
+    for project_id in project_ids:
+        if len(project_id) != 0:
+            Project.objects.filter(pid=project_id).delete()
+
+
+    print("project_ids:", project_ids)
+    return render(request, "project.html")
+
+
+@login_required
 def add_modules(request):
     """
     新增模块

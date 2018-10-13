@@ -236,6 +236,31 @@
     })
 
 
+    // 删除
+
+    $("#btn_del").click(function () {
+        var env_ids = new Array();
+        var count = 0;
+        var i = 0;
+        $("#myAlert1").css("display","none");
+        $("#table").find(":checkbox:checkbox").each(function () {
+            env_id = $(this).parent().next().text();
+            alert(env_id)
+            if(env_id != ""){
+                env_ids[i++] = env_id;
+            }
+            count ++;
+
+        });
+        if (count==0){
+            $("#myAlert1").css("display", "inherit");
+            return false;
+        }
+        else {
+            $("#ipt1").val(env_ids);
+            $("#del").submit();
+        }
+    });
 
 
 

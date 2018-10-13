@@ -57,11 +57,11 @@
                         csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
                     },
                     success: function (data) {
-                        console.log(data)
+                        console.log(data);
 
 
                         if (data.username){
-                            toastr.success('提交数据成功');
+
                             if (location.search){
                                 location.href = location.search.slice(6)
                             }
