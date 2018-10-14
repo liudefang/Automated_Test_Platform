@@ -71,18 +71,22 @@
             processData: false,
             data: formdata,
             success: function (data) {
-                console.log(data)
+
 
                 if(data.username){
                     // 注册成功
-                    toastr.error('提交数据成功');
+                    toastr.success('注册成功');
+                    setTimeout(function () {
+                        location.href="/login/"
+                    }, 1000)
 
-                    location.href="/login/"
+
 
                 }
                 else {
                     //注册失败
                     // 清空错误信息
+                    toastr.error("注册失败");
                     $("span.error").html("");
                     $(".form-group").removeClass("has-error");
 
