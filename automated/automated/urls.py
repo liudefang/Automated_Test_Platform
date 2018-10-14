@@ -19,6 +19,9 @@ from django.contrib import admin
 from django.urls import path
 
 from test_platform import views
+from api import api_views
+from appui import app_views
+from  webui import web_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
