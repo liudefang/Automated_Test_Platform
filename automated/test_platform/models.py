@@ -39,140 +39,23 @@ class Modules(models.Model):
         return self.modules_name
 
 
-class Apitest(models.Model):
+class Set(models.Model):
     """
-    业务场景接口表
+    设置表
     """
-    # 关联模块id
-    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
-    apitest_name = models.CharField('流程接口名称', max_length=64)     # 流程接口测试场景
-    apitest_desc = models.CharField('描述', max_length=64, null=True)      # 流程接口描述
-    apitester = models.CharField('测试负责人', max_length=64)    # 执行人
-    apitest_result = models.BooleanField('测试结果')     # 流程接口测试结果
-    create_time = models.DateTimeField('创建时间', auto_now=True)       # 创建时间，自动读取当前时间
-
-    class Meta:
-        verbose_name = '流程场景接口'
-        verbose_name = '流程场景接口'
+    set_name = models.CharField('设置名称', max_length=32)  # 系统设置名称
+    set_value = models.CharField('设置值', max_length=128)     # 设置值
+    platform_name = models.CharField('平台名称', max_length=64)     # 平台名称
+    platform_version = models.CharField('平台版本', max_length=32)    # 操作系统的版本
+    device_name = models.CharField('设备名称', max_length=64)       # 设备名称
+    app = models.CharField('APP路径', max_length=256)     # app的路径
+    no_reset = models.BooleanField('是否重启', max_length=16)   # 是否重启
+    reset_key_board = models.BooleanField('重置键盘', max_length=16)    # 重置键盘
+    unicode_key_board = models.BooleanField('unicode键盘', max_length=16)     # unicode键盘
+    recreate_charome_driver_sessions = models.BooleanField('启动charomedriver', max_length=16)  # 切换webview的时候重新启动chromedriver
 
     def __str__(self):
-        return self.apitest_name
-
-
-class Apistep(models.Model):
-    """
-    接口步骤表
-    """
-    apitest = models.ForeignKey(to='Apitest', to_field='id', on_delete=models.CASCADE, null=True)   # 关联接口id
-    apitest_name = models.CharField('接口名称', max_length=128)  # 接口标题
-    apiurl = models.CharField('URL地址', max_length=256)      # 接口URL地址
-    apiparamvalue = models.CharField('请求参数和值', max_length=1024)     # 请求参数和值
-    REQUEST_METHOD = (('get', 'get'), ('post', 'post'), ('put', 'put'), ('delete', 'delete'), ('patch', 'patch'))
-    # 请求方法
-    apimethod = models.CharField(verbose_name='请求方法', choices=REQUEST_METHOD,default='get', max_length=64, null=True)
-    apiresult = models.CharField('预期结果', max_length=256)    # 预期结果
-    apistatus = models.BooleanField('是否通过')     # 测试结果
-    create_time = models.DateTimeField('创建时间', auto_now=True)   # 创建时间，自动读取当前时间
-
-    def __str__(self):
-        return self.apitest_name
-
-
-class Apis(models.Model):
-    """
-    单一接口表
-    """
-
-    # 关联模块id
-    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
-    api_name = models.CharField('接口名称', max_length=128)      # 接口标题
-    apiurl = models.CharField('URL地址', max_length=256)  # 接口URL地址
-    apiparamvalue = models.CharField('请求参数和值', max_length=1024)  # 请求参数和值
-    REQUEST_METHOD = (('get', 'get'), ('post', 'post'), ('put', 'put'), ('delete', 'delete'), ('patch', 'patch'))
-    # 请求方法
-    apimethod = models.CharField(verbose_name='请求方法', choices=REQUEST_METHOD, default='get', max_length=64, null=True)
-    apiresult = models.CharField('预期结果', max_length=256)  # 预期结果
-    apistatus = models.BooleanField('是否通过')  # 测试结果
-    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间，自动读取当前时间
-
-    def __str__(self):
-        return self.api_name
-
-
-class Webcase(models.Model):
-    """
-    webui测试用例表
-    """
-    # 关联模块id
-    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
-    webcase_name = models.CharField('用例名称', max_length=256)      # web测试用例名称
-    webtestresult = models.BooleanField('测试结果')     # web测试结果
-    webtester = models.CharField('测试负责人', max_length=64)    # 执行人
-    create_time = models.DateTimeField('创建时间', auto_now=True)       # 创建时间，自动读取当前时间
-
-    class Meta:
-        verbose_name = 'web测试用例'
-        verbose_name_plural = 'web测试用例'
-
-    def __str__(self):
-        return self.webcase_name
-
-
-class Webcasestep(models.Model):
-    """
-    webui测试用例步骤
-    """
-    webcase = models.ForeignKey(to='Webcase', to_field='id', on_delete=models.CASCADE, null=True)
-    webcase_name = models.CharField('测试用例标题', max_length=256)    # webui测试用例标题
-    webtest_setp = models.CharField('测试步骤', max_length=256)      # webui 测试用例步骤
-    webtestobj_name = models.CharField('测试对象名称描述', max_length=256)   # webui 测试对象名称描述(关键字）
-    webfindmethod = models.CharField('定位方式', max_length=256)    # 操作元素定位方式
-    webevelement = models.CharField('控件元素', max_length=512)     # 操作元素的定位表达式
-    webtestdata = models.CharField('测试数据', max_length=512)      # 测试步骤中输入的数据
-    webassertdata = models.CharField('验证数据', max_length=128)    # 预期结果数据
-    webtestresult = models.BooleanField('测试结果', max_length=32)  # 测试结果
-    create_time = models.DateTimeField('创建时间', auto_now=True)   # 创建时间，自动读取当前时间
-
-    def __str__(self):
-        return self.webcase_name
-
-
-class Appcase(models.Model):
-    """
-    appui测试用例表
-    """
-    # 关联模块id
-    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
-    appcase_name = models.CharField('用例名称', max_length=256)  # web测试用例名称
-    apptestresult = models.BooleanField('测试结果')  # web测试结果
-    apptester = models.CharField('测试负责人', max_length=64)  # 执行人
-    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间，自动读取当前时间
-
-    class Meta:
-        verbose_name = 'app测试用例'
-        verbose_name_plural = 'app测试用例'
-
-    def __str__(self):
-        return self.appcase_name
-
-
-class Appcasestep(models.Model):
-    """
-    appui测试用例步骤
-    """
-    appcase = models.ForeignKey(to='appcase', to_field='id', on_delete=models.CASCADE, null=True)
-    appcase_name = models.CharField('测试用例标题', max_length=256)  # webui测试用例标题
-    apptestsetp = models.CharField('测试步骤', max_length=256)  # webui 测试用例步骤
-    apptestobj_name = models.CharField('测试对象名称描述', max_length=256)  # webui 测试对象名称描述(关键字）
-    appfindmethod = models.CharField('定位方式', max_length=256)  # 操作元素定位方式
-    appevelement = models.CharField('控件元素', max_length=512)  # 操作元素的定位表达式
-    apptestdata = models.CharField('测试数据', max_length=512)  # 测试步骤中输入的数据
-    appassertdata = models.CharField('验证数据', max_length=128)  # 预期结果数据
-    apptestresult = models.BooleanField('测试结果', max_length=32)  # 测试结果
-    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间，自动读取当前时间
-
-    def __str__(self):
-        return self.appcase_name
+        return self.set_name
 
 
 class UserInfo(AbstractUser):
