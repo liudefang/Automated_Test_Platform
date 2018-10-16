@@ -1,5 +1,5 @@
 from django.db import models
-
+from test_platform.models import Modules
 # Create your models here.
 
 
@@ -8,7 +8,7 @@ class App_case(models.Model):
     appui测试用例表
     """
     # 关联模块id
-    Modules = models.ForeignKey(to='Modules', to_field='mid', on_delete=models.CASCADE, null=True)
+    Modules = models.ForeignKey(to='test_platform.Modules', to_field='mid', on_delete=models.CASCADE, null=True)
     app_case_name = models.CharField('用例名称', max_length=256)  # web测试用例名称
     app_test_result = models.BooleanField('测试结果')  # web测试结果
     app_tester = models.CharField('测试负责人', max_length=64)  # 执行人
@@ -19,14 +19,14 @@ class App_case(models.Model):
         verbose_name_plural = 'app测试用例'
 
     def __str__(self):
-        return self.appcase_name
+        return self.app_case_name
 
 
 class App_case_step(models.Model):
     """
     appui测试用例步骤
     """
-    app_case = models.ForeignKey(to='appcase', to_field='id', on_delete=models.CASCADE, null=True)
+    app_case = models.ForeignKey(to='App_case', to_field='id', on_delete=models.CASCADE, null=True)
     app_case_name = models.CharField('测试用例标题', max_length=256)  # webui测试用例标题
     app_test_setp = models.CharField('测试步骤', max_length=256)  # webui 测试用例步骤
     app_testobj_name = models.CharField('测试对象名称描述', max_length=256)  # webui 测试对象名称描述(关键字）
@@ -38,4 +38,4 @@ class App_case_step(models.Model):
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间，自动读取当前时间
 
     def __str__(self):
-        return self.appcase_name
+        return self.app_case_name
