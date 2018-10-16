@@ -30,7 +30,7 @@ class Web_case_step(models.Model):
     web_case = models.ForeignKey(to='Web_case', to_field='id', on_delete=models.CASCADE, null=True)
     web_case_name = models.CharField('测试用例标题', max_length=256)    # webui测试用例标题
     web_test_setp = models.CharField('测试步骤', max_length=256)      # webui 测试用例步骤
-    web_testobj_name = models.CharField('测试对象名称描述', max_length=256)   # webui 测试对象名称描述(关键字）
+    web_test_obj_name = models.CharField('测试对象名称描述', max_length=256)   # webui 测试对象名称描述(关键字）
     web_find_method = models.CharField('定位方式', max_length=256)    # 操作元素定位方式
     web_evelement = models.CharField('控件元素', max_length=512)     # 操作元素的定位表达式
     web_test_data = models.CharField('测试数据', max_length=512)      # 测试步骤中输入的数据

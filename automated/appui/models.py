@@ -29,7 +29,7 @@ class App_case_step(models.Model):
     app_case = models.ForeignKey(to='App_case', to_field='id', on_delete=models.CASCADE, null=True)
     app_case_name = models.CharField('测试用例标题', max_length=256)  # webui测试用例标题
     app_test_setp = models.CharField('测试步骤', max_length=256)  # webui 测试用例步骤
-    app_testobj_name = models.CharField('测试对象名称描述', max_length=256)  # webui 测试对象名称描述(关键字）
+    app_test_obj_name = models.CharField('测试对象名称描述', max_length=256)  # webui 测试对象名称描述(关键字）
     app_find_method = models.CharField('定位方式', max_length=256)  # 操作元素定位方式
     app_evelement = models.CharField('控件元素', max_length=512)  # 操作元素的定位表达式
     app_test_data = models.CharField('测试数据', max_length=512)  # 测试步骤中输入的数据

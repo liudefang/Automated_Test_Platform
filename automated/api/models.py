@@ -51,7 +51,7 @@ class Apis(models.Model):
     Modules = models.ForeignKey(to='test_platform.Modules', to_field='mid', on_delete=models.CASCADE, null=True)
     api_name = models.CharField('接口名称', max_length=128)      # 接口标题
     api_url = models.CharField('URL地址', max_length=256)  # 接口URL地址
-    api_paramvalue = models.CharField('请求参数和值', max_length=1024)  # 请求参数和值
+    api_param_value = models.CharField('请求参数和值', max_length=1024)  # 请求参数和值
     REQUEST_METHOD = (('get', 'get'), ('post', 'post'), ('put', 'put'), ('delete', 'delete'), ('patch', 'patch'))
     # 请求方法
     api_method = models.CharField(verbose_name='请求方法', choices=REQUEST_METHOD, default='get', max_length=64, null=True)
