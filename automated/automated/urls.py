@@ -16,8 +16,10 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
+
+from api import urls
 from test_platform import views
 from api import api_views
 from appui import app_views
@@ -41,4 +43,11 @@ urlpatterns = [
     url(r'^add_modules/$', views.add_modules),
 
     url(r'^toastr/$', views.toastr),
+
+    # api子路由
+    url(r'^api/', include('api.urls', namespace='api', app_name='api')),
+    # appui子路由
+    url(r'^appui/', include('appui.urls', namespace='appui', app_name='appui')),
+    # webui子路由
+    url(r'^webui/', include('webui.urls', namespace='webui', app_name='webui')),
 ]
