@@ -5,7 +5,7 @@
 from django import views
 from django.conf.urls import url
 
-# app_name = 'appui'
+# app_name = 'webui'
 # urlpatterns = [
 #     url(r'^$', views.某某, name="某某"),
 #
