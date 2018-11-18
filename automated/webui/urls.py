@@ -2,11 +2,13 @@
 # @Time    : 18-10-17 上午9:21
 # @Author  : mike.liu
 # @File    : urls.py
-from django import views
+
 from django.conf.urls import url
 
-# app_name = 'webui'
-# urlpatterns = [
-#     url(r'^$', views.某某, name="某某"),
-#
-# ]
+from webui import web_views
+
+app_name = 'webui'
+urlpatterns = [
+    url(r'^$', web_views.index, name="index"),
+
+]

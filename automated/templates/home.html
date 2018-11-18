@@ -87,8 +87,8 @@
                 <div class="menu">
                     <div class="head bg-primary">接口自动化用例管理</div>
                     <ul class="nav nav-sidebar">
-                        <li><a href="#">接口测试用例</a> </li>
-                        <li><a href="#">接口步骤</a> </li>
+                        <li><a href="/api/apitest_manage/" target="_self">接口测试用例</a> </li>
+                        <li><a href="/api/apistep_manage/" target="_self">接口步骤</a> </li>
                         <li><a href="#">单一接口</a> </li>
                         <li><a href="#">接口测试结果</a> </li>
                     </ul>
@@ -261,7 +261,49 @@
         }
     });
 
+// 新建接口测试用例
 
+    $(".add_api_case").click(function () {
+
+        $.ajax({
+            url: "/add_api_case/",
+            type: "post",
+            data: {
+                project_id: $("#project_id").val(),
+                module_id: $("#module_id").val(),
+                api_case_name: $("#api_case_name").val(),
+                api_desc: $("#api_desc").val(),
+                testers: $("#testers").val(),
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+            },
+            success: function (data) {
+
+                if (data.status== 0) {
+                    toastr.success('新增接口测试用例成功');
+
+                    setTimeout(function () {
+                        location.href = "/apitest_manage/"
+                    }, 2000)
+
+
+                }
+
+                else {
+
+
+                    $(".error").text(data.msg);
+                    setTimeout(function () {
+                        $(".error").text("");
+
+                    }, 5000)
+                }
+
+
+
+            }
+
+        })
+    })
 
 
 

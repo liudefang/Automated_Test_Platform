@@ -45,9 +45,9 @@ urlpatterns = [
     url(r'^toastr/$', views.toastr),
 
     # api子路由
-    url(r'^api/', include('api.urls', namespace='api', app_name='api')),
+    url(r'^api/', include('api.urls')),
     # appui子路由
-    url(r'^appui/', include('appui.urls', namespace='appui', app_name='appui')),
+    url(r'^appui/', include('appui.urls')),
     # webui子路由
-    url(r'^webui/', include('webui.urls', namespace='webui', app_name='webui')),
+    url(r'^webui/', include('webui.urls')),
 ]
