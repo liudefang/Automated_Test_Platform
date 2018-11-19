@@ -169,7 +169,6 @@ def del_project(request):
         if len(project_id) != 0:
             Project.objects.filter(pid=project_id).delete()
 
-
     print("project_ids:", project_ids)
     return render(request, "project.html")
 
@@ -183,7 +182,6 @@ def add_modules(request):
     """
 
     # 搜索出所有的项目
-
 
     if request.method == "POST":
 
